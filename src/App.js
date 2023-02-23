@@ -1,48 +1,38 @@
 import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchSignIn } from "./features/__test__/services/testServices";
+import {
+  Home,
+  LibsDemo,
+  Missing,
+  PasswordRecovery,
+  Profile,
+  Tourist,
+  UserTourist,
+} from "./pages";
+// import { NavigationBar } from "./features/NavigationBar";
+// import { Footer } from "./features/Footer";
+import { Routes, Route } from "react-router-dom";
+import Layout from "./routes/Layout";
+import RequireAuth from "./routes/RequireAuth";
 
-function App() {
-  const dispatch = useDispatch();
-  const { status, data } = useSelector((state) => state.test);
-  console.log(data);
-
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <button
-          style={{ width: 150, height: 50 }}
-          title="Hit endpoint"
-          onClick={() => {
-            // dispatch(SetUserToken("bauroerj0239r9ehugisdjkbgsdkjfbg"));
-            // dispatch(getTestServices());
-            dispatch(
-              fetchSignIn({
-                email: "radiant@pondokit.com",
-                password: "bismillah123@",
-              })
-            );
-          }}
-        >
-          Hit endpoint
-        </button>
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Current status: <code>{status}</code>.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        {/* Public routes */}
+        <Route path="/" element={<Home />} />
+        <Route path="pariwisata" element={<Tourist />} />
+        <Route path="demo" element={<LibsDemo />} />
+
+        {/* Protected routes */}
+        <Route element={<RequireAuth />}>
+          <Route path="profile" element={<Profile />} />
+          <Route path="profile/tourist" element={<UserTourist />} />
+          <Route path="profile/recovery" element={<PasswordRecovery />} />
+        </Route>
+
+        {/* catch all */}
+        <Route path="*" element={<Missing />} />
+      </Route>
+    </Routes>
   );
 }
-
-export default App;
