@@ -1,0 +1,12 @@
+.container {
+  background-color: #f7911a;
+  height: 50px;
+  padding: 0 50px;
+  border: none;
+  /* box-shadow: ; */
+}
+
+p {
+  color: white;
+  font-weight: bold;
+}
