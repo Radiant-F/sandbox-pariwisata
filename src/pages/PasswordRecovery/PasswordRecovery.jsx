@@ -17,7 +17,7 @@ export default function PasswordRecovery() {
   useEffect(() => {
     if (status === "success")
       setTimeout(() => dispatch(SetStatusAuth("idle")), 2000);
-  }, [status]);
+  }, [status, dispatch]);
 
   const disableSubmit =
     prevPassword === "" ||
