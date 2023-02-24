@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
+  fetchRecoverPassword,
   fetchSignIn,
   fetchUserUpdate,
 } from "../../features/Auth/services/authServices";
@@ -64,6 +65,16 @@ export const authSlice = createSlice({
         state.status = "success";
       })
       .addCase(fetchUserUpdate.rejected, (state, action) => {
+        state.status = "rejected";
+      });
+    builder
+      .addCase(fetchRecoverPassword.pending, (state, action) => {
+        state.status = "pending";
+      })
+      .addCase(fetchRecoverPassword.fulfilled, (state, action) => {
+        state.status = "success";
+      })
+      .addCase(fetchRecoverPassword.rejected, (state, action) => {
         state.status = "rejected";
       });
   },
