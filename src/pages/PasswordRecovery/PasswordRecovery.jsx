@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Button, Gap } from "../../assets";
 import { fetchRecoverPassword } from "../../features/Auth/services/authServices";
+import { SetStatusAuth } from "../../redux/slices/authSlice";
 import styles from "./index.module.css";
 
 export default function PasswordRecovery() {
@@ -12,6 +13,11 @@ export default function PasswordRecovery() {
   const [prevPassword, setPrevPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPass, setConfirmNewPass] = useState("");
+
+  useEffect(() => {
+    if (status === "success")
+      setTimeout(() => dispatch(SetStatusAuth("idle")), 2000);
+  }, [status]);
 
   const disableSubmit =
     prevPassword === "" ||
@@ -27,6 +33,15 @@ export default function PasswordRecovery() {
     };
     dispatch(fetchRecoverPassword(formData));
   }
+
+  const btnTitle =
+    status === "idle"
+      ? "Simpan"
+      : status === "pending"
+      ? "Menyimpan.."
+      : status === "success"
+      ? "Sukses"
+      : "Gagal";
 
   return (
     <main className={styles.container}>
@@ -72,7 +87,7 @@ export default function PasswordRecovery() {
         <Button title="Batal" onClick={() => navigate("/profile")} cancel />
         <Gap width={10} />
         <Button
-          title={status === "pending" ? "Memuat.." : "Simpan"}
+          title={btnTitle}
           disabled={disableSubmit}
           onClick={submitRecovery}
           width={120}
