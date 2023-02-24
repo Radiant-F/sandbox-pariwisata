@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  /* justify-content: space-between; */
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+.linkContainer {
+  width: 30vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.textLink {
+  text-decoration: none;
+  font-size: large;
+  color: black;
+}
+
+.textLink:hover {
+  color: #f7911a;
+  font-weight: 500;
+}

@@ -1,0 +1,47 @@
+.containerImgProfile {
+  width: 110px;
+  height: 110px;
+  background-color: aqua;
+  border-radius: 65.5px;
+  border: 7.5px solid white;
+  overflow: hidden;
+  box-shadow: 1px 1px 10px rgb(194, 194, 194);
+  margin-bottom: -45px;
+}
+
+.btnCamera {
+  width: 50px;
+  height: 50px;
+  margin-left: 80px;
+  background-color: #f7911a;
+  border: 2px solid white;
+  border-radius: 25px;
+  align-items: center;
+}
+
+.iconCamera {
+  width: 27.5px;
+  position: fixed;
+  margin-top: 10px;
+  margin-left: 3.5px;
+}
+
+.containerProfile {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.textUserName {
+  font-weight: bold;
+  font-size: x-large;
+  color: #1f2f59;
+}
+
+.inputContainer {
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid grey;
+  margin-top: 10px;
+  flex: 1;
+}
