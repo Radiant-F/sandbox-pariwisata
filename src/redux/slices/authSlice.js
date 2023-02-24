@@ -1,5 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchSignIn, fetchSignOut } from "./authServices";
+import {
+  fetchSignIn,
+  fetchUserUpdate,
+} from "../../features/Auth/services/authServices";
 
 const defaultUserData = {
   id: 0,
@@ -54,25 +57,15 @@ export const authSlice = createSlice({
         state.status = "rejected";
       });
     builder
-      .addCase(fetchSignOut.pending, (state, action) => {
+      .addCase(fetchUserUpdate.pending, (state, action) => {
         state.status = "pending";
       })
-      .addCase(fetchSignOut.fulfilled, (state, action) => {
+      .addCase(fetchUserUpdate.fulfilled, (state, action) => {
         state.status = "success";
       })
-      .addCase(fetchSignOut.rejected, (state, action) => {
+      .addCase(fetchUserUpdate.rejected, (state, action) => {
         state.status = "rejected";
       });
-    // builder
-    //   .addCase(fetchSignIn.pending, (state, action) => {
-    //     state.status = "pending";
-    //   })
-    //   .addCase(fetchSignIn.fulfilled, (state, action) => {
-    //     state.status = "success";
-    //   })
-    //   .addCase(fetchSignIn.rejected, (state, action) => {
-    //     state.status = "rejected";
-    //   });
   },
 });
 
