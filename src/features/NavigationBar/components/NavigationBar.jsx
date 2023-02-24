@@ -50,11 +50,13 @@ export default function NavigationBar() {
       >
         {username ? (
           <div className={styles.profileContainer}>
-            <img
-              alt="Profile"
-              src={photo ? photo : IMGpfpDefault}
-              className={styles.imgProfile}
-            />
+            <div className={styles.pfpContainer}>
+              <img
+                alt="Profile"
+                src={photo ? photo : IMGpfpDefault}
+                style={{ height: "50px" }}
+              />
+            </div>
             <p className={styles.textUsername}>
               {username.charAt(0).toUpperCase() + username.slice(1)}
             </p>

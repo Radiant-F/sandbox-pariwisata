@@ -81,11 +81,14 @@
   align-items: center;
 }
 
-.imgProfile {
-  width: 50px;
+.pfpContainer {
   height: 50px;
+  width: 50px;
   border-radius: 25px;
   border: 1px solid rgba(128, 128, 128, 0.245);
+  overflow: hidden;
+  justify-content: center;
+  display: flex;
 }
 
 .textUsername {
