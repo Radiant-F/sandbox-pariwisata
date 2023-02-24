@@ -1,30 +1,34 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { SetAuthModal } from "../../Auth/services/authSlice";
+import { SetAuthModal } from "../../../redux/slices/authSlice";
 import { fetchSignIn, fetchSignOut } from "../../Auth/services/authServices";
-import { Button, IMGpfpDefault, IMGsandbox } from "../../../assets";
+import {
+  Button,
+  IconChevron,
+  IconCloseSquare,
+  IconKey,
+  IMGpfpDefault,
+  IMGsandbox,
+} from "../../../assets";
+import styles from "./index.module.css";
+import FormInput from "./FormInput";
 
 export default function NavigationBar() {
   const dispatch = useDispatch();
-  const { token, auth_modal, status, user_data, message } = useSelector(
+  const { token, auth_modal, status, user_data } = useSelector(
     (state) => state.auth
   );
   const { username, photo } = user_data;
   const navigate = useNavigate();
+
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [menu, setMenu] = useState(false);
-  function submitSignIn() {
-    dispatch(fetchSignIn({ email, password }));
-  }
-
   function handleSignOut() {
     setMenu(false);
     dispatch(fetchSignOut(navigate));
   }
-
-  // console.log(token.access);
 
   const disableLogin =
     status === "pending" ||
@@ -34,58 +38,105 @@ export default function NavigationBar() {
     password === "";
 
   return (
-    <nav>
+    <nav className={styles.container}>
       <Link to={"/"} onClick={() => setMenu(false)}>
         <img alt="Sandbox Logo" src={IMGsandbox} style={{ width: 130 }} />
       </Link>
       <Link
+        style={{ textDecoration: "none" }}
         onClick={() => {
           !token.access ? dispatch(SetAuthModal(!auth_modal)) : setMenu(!menu);
         }}
       >
         {username ? (
-          <>
+          <div className={styles.profileContainer}>
             <img
-              alt="Profile picture"
+              alt="Profile"
               src={photo ? photo : IMGpfpDefault}
-              style={{ width: "50px", height: "50px" }}
+              className={styles.imgProfile}
             />
-            {username.charAt(0).toUpperCase() + username.slice(1)}
-          </>
+            <p className={styles.textUsername}>
+              {username.charAt(0).toUpperCase() + username.slice(1)}
+            </p>
+            <img
+              alt="Chevron menu"
+              src={IconChevron}
+              style={{ width: "10px" }}
+            />
+          </div>
         ) : (
           <Button />
         )}
       </Link>
       {menu && (
-        <div>
-          <Link to={"/profile"} onClick={() => setMenu(false)}>
+        <div className={styles.containerMenu}>
+          <Link
+            to={"/profile"}
+            onClick={() => setMenu(false)}
+            className={styles.btnTextProfile}
+          >
             Profil Saya
           </Link>
-          <Link to={"/recovery"} onClick={() => setMenu(false)}>
+          <Link
+            to={"profile/recovery"}
+            onClick={() => setMenu(false)}
+            className={styles.btnTextProfile}
+          >
             Ubah Password
           </Link>
-          <Link onClick={handleSignOut}>Keluar</Link>
+          <Link onClick={handleSignOut} className={styles.btnTextProfile}>
+            Keluar
+          </Link>
         </div>
       )}
-      <div>auth status: {status}</div>
       {auth_modal && (
-        <div>
-          <input
-            title="email"
-            type={"text"}
-            onChange={(event) => setEmail(event.target.value)}
-          />
-          <input
-            title="password"
-            type={"password"}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-          <button onClick={submitSignIn} disabled={disableLogin}>
-            submit
-          </button>
-          <br />
-          <div>{message && message}</div>
-        </div>
+        <>
+          <div className={styles.modalContainer}>
+            <div
+              className={styles.modalOverlay}
+              onClick={() => dispatch(SetAuthModal(false))}
+            />
+            <div className={styles.modalContent}>
+              <div className={styles.modalHeader}>
+                <div style={{ width: "25px", height: "25px" }} />
+                <p className={styles.textModalTitle}>Login</p>
+                <button
+                  className={styles.closeButton}
+                  onClick={() => dispatch(SetAuthModal(false))}
+                >
+                  <img
+                    alt="icon"
+                    src={IconCloseSquare}
+                    style={{ width: "25px", height: "25px" }}
+                  />
+                </button>
+              </div>
+              <FormInput onChange={(e) => setEmail(e.target.value)} />
+              <FormInput
+                onChange={(e) => setPassword(e.target.value)}
+                password
+                title="Password"
+                type="password"
+                placeholder="Password"
+                icon={IconKey}
+              />
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  marginTop: 15,
+                }}
+              >
+                <Button
+                  onClick={() => dispatch(fetchSignIn({ email, password }))}
+                  disabled={disableLogin || status === "pending"}
+                  title={status === "pending" ? "Memuat.." : "Login"}
+                  width={"200px"}
+                />
+              </div>
+            </div>
+          </div>
+        </>
       )}
     </nav>
   );
