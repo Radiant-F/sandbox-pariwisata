@@ -66,9 +66,7 @@ export const fetchRecoverPassword = createAsyncThunk(
   async (formData, { dispatch, getState }) => {
     const { access } = getState().auth.token;
     try {
-      console.log("formdata reset pass:", formData);
       const { data } = await postRecoveryPassword(formData, access);
-      console.log("data reset password masbro:", data);
       return data;
     } catch (error) {
       console.log("error reset password masbro", error.message);
