@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Button, Gap } from "../../assets";
 import { fetchRecoverPassword } from "../../features/Auth/services/authServices";
@@ -7,6 +7,7 @@ import styles from "./index.module.css";
 
 export default function PasswordRecovery() {
   const dispatch = useDispatch();
+  const { status } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const [prevPassword, setPrevPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -16,6 +17,7 @@ export default function PasswordRecovery() {
     prevPassword === "" ||
     newPassword === "" ||
     confirmNewPass === "" ||
+    status === "pending" ||
     newPassword !== confirmNewPass;
 
   async function submitRecovery() {
@@ -70,7 +72,7 @@ export default function PasswordRecovery() {
         <Button title="Batal" onClick={() => navigate("/profile")} cancel />
         <Gap width={10} />
         <Button
-          title="Simpan"
+          title={status === "pending" ? "Memuat.." : "Simpan"}
           disabled={disableSubmit}
           onClick={submitRecovery}
           width={120}
