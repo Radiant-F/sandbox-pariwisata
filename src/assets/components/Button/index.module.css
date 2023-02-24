@@ -1,12 +1,37 @@
 .container {
   background-color: #f7911a;
-  height: 50px;
-  padding: 0 50px;
+  padding: 0 25px;
   border: none;
+  border-radius: 25px;
   /* box-shadow: ; */
 }
 
-p {
+.container:hover {
+  background-color: #c67415;
+}
+
+.text {
   color: white;
   font-weight: bold;
+}
+
+.containerCancel {
+  background-color: white;
+  padding: 0 25px;
+  border: 1px solid rgb(191, 191, 191);
+  border-radius: 25px;
+  /* box-shadow: ; */
+}
+
+.containerCancel:hover {
+  background-color: #c67415;
+}
+
+.textCancel {
+  color: #f7911a;
+  font-weight: bold;
+}
+
+.textCancel:hover {
+  color: white;
 }
