@@ -1,22 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { IMGpfpDefault } from "../../../assets";
-import axios from "axios";
+import { Button, Gap, IconCamera, IMGpfpDefault } from "../../../assets";
 import { fetchUserUpdate } from "../../Auth/services/authServices";
+import styles from "./index.module.css";
 
 export default function UserProfile() {
   const dispatch = useDispatch();
-  const {
-    email,
-    username,
-    full_name,
-    photo,
-    role,
-    handphone,
-    address,
-    is_active,
-  } = useSelector((state) => state.auth.user_data);
-  const { access } = useSelector((state) => state.auth.token);
+  const { email, username, full_name, photo, handphone, address } = useSelector(
+    (state) => state.auth.user_data
+  );
+  const { status } = useSelector((state) => state.auth);
 
   const [fullName, setFullName] = useState(
     username.charAt(0).toUpperCase() + username.slice(1)
@@ -28,80 +21,116 @@ export default function UserProfile() {
 
   async function submitUpdateProfile() {
     const formData = new FormData();
-    formData.append("photo", image);
+    image !== null && formData.append("photo", image);
     formData.append("email", newEmail);
     formData.append("address", newAddress);
     formData.append("handphone", noHandphone);
     formData.append("full_name", fullName);
-    // axios
-    //   .patch(
-    //     "https://api-entrytest.sandboxindonesia.id/api/user/user/me/",
-    //     formData,
-    //     {
-    //       headers: {
-    //         "Content-Type": "multipart/form-data",
-    //         Authorization: `Bearer ${access}`,
-    //       },
-    //     }
-    //   )
-    //   .then((response) => {
-    //     console.log(response.data);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
     dispatch(fetchUserUpdate(formData));
   }
 
+  useEffect(() => {
+    status === "success" && setImage(null);
+  }, [status]);
+
+  const disableButton =
+    fullName === "" ||
+    newEmail === "" ||
+    newAddress === "" ||
+    noHandphone === "" ||
+    status === "pending";
+
   return (
-    <main>
-      <div>
-        <img
-          alt="Profile Picture"
-          src={photo ? photo : IMGpfpDefault}
-          style={{ width: "50px", height: "50px" }}
-        />
-        <div>{fullName.charAt(0).toUpperCase() + fullName.slice(1)}</div>
-        Nama
-        <input
-          title="Nama"
-          type={"text"}
-          value={fullName}
-          onChange={(event) => setFullName(event.target.value)}
-        />
+    <main style={{ flex: 1 }}>
+      <div style={{ flex: 1 }}>
+        <div className={styles.containerProfile}>
+          <div>
+            <div className={styles.containerImgProfile}>
+              <img
+                alt="profile"
+                src={image ? image : photo ? photo : IMGpfpDefault}
+                style={{ height: "110px" }}
+              />
+            </div>
+            <button className={styles.btnCamera}>
+              <img
+                src={IconCamera}
+                alt={"camera"}
+                className={styles.iconCamera}
+              />
+              <input
+                type="file"
+                name="image"
+                onChange={(e) => setImage(e.target.files[0])}
+                alt="img profile"
+                style={{ width: "50px", height: "50px", opacity: 0 }}
+              />
+            </button>
+          </div>
+          <Gap width={30} />
+          <div style={{ flex: 1 }}>
+            <div className={styles.textUserName}>
+              {full_name.charAt(0).toUpperCase() + full_name.slice(1)}
+            </div>
+            <Gap height={10} />
+            <div style={{ color: "black" }}>{address}</div>
+          </div>
+          <Button
+            title={status === "pending" ? "Menyimpan.." : "Simpan"}
+            width={120}
+            onClick={submitUpdateProfile}
+            disabled={disableButton}
+          />
+        </div>
+        <Gap height={40} />
+        {/* Name */}
+        <div style={{ flex: 1 }}>
+          <div style={{ fontWeight: "bold" }}>Nama</div>
+          <input
+            className={styles.inputContainer}
+            title="name"
+            type={"text"}
+            defaultValue={full_name}
+            onChange={(event) => setFullName(event.target.value)}
+          />
+        </div>
         <br />
-        Email
-        <input
-          title="email"
-          type={"text"}
-          value={newEmail}
-          onChange={(event) => setNewEmail(event.target.value)}
-        />
+        {/* Email */}
+        <div style={{ flex: 1 }}>
+          <div style={{ fontWeight: "bold" }}>Email</div>
+          <input
+            className={styles.inputContainer}
+            title="email"
+            type={"email"}
+            value={newEmail}
+            onChange={(event) => setNewEmail(event.target.value)}
+          />
+        </div>
         <br />
-        Alamat
-        <input
-          title="address"
-          type={"text"}
-          value={newAddress}
-          onChange={(event) => setNewAddress(event.target.value)}
-        />
+        {/* Address */}
+        <div style={{ flex: 1 }}>
+          <div style={{ fontWeight: "bold" }}>Alamat</div>
+          <input
+            className={styles.inputContainer}
+            title="address"
+            type={"text"}
+            value={newAddress}
+            onChange={(event) => setNewAddress(event.target.value)}
+          />
+        </div>
         <br />
-        No Handphone
-        <input
-          title="phone"
-          type={"number"}
-          value={noHandphone}
-          onChange={(event) => setNoHandphone(event.target.value)}
-        />
-        <br />
-        Foto
-        <input
-          type="file"
-          name="image"
-          onChange={(e) => setImage(e.target.files[0])}
-        />
+        {/* Phone Number */}
+        <div style={{ flex: 1 }}>
+          <div style={{ fontWeight: "bold" }}>No Handphone</div>
+          <input
+            className={styles.inputContainer}
+            title="handphone"
+            type={"text"}
+            value={noHandphone}
+            onChange={(event) => setNoHandphone(event.target.value)}
+          />
+        </div>
       </div>
-      <button onClick={submitUpdateProfile}>Submit</button>
     </main>
   );
 }
