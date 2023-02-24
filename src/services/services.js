@@ -10,7 +10,7 @@ const config = (access) => ({
   },
 });
 
-const configUserUpdate = (access) => ({
+const configMultipart = (access) => ({
   headers: {
     "Content-Type": "multipart/form-data",
     Authorization: `Bearer ${access}`,
@@ -23,16 +23,18 @@ export const postSignIn = (formData) =>
 export const getUserData = (access) =>
   axios.get(`${host}/user/user/me/`, config(access));
 export const postRecoveryPassword = (formData, access) =>
-  axios.get(`${host}/user/user/change-password/`, formData, config(access));
+  axios.post(`${host}/user/user/change-password/`, formData, config(access));
 export const patchUserData = (formData, access) =>
-  axios.patch(`${host}/user/user/me/`, formData, configUserUpdate(access));
+  axios.patch(`${host}/user/user/me/`, formData, configMultipart(access));
 export const postSignOut = (refresh) =>
   axios.post(`${host}/auth/logout/`, refresh);
 
-// Tourist Object
+// Tourist
 export const postTouristObject = (formData, access) =>
   axios.post(
     `${host}/tourist-object/tourist-object/`,
     formData,
-    config(access)
+    configMultipart(access)
   );
+export const getBorderline = (access) =>
+  axios.get(`${host}/datamaster/borderline/`, config(access));
