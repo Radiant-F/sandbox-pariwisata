@@ -2,10 +2,10 @@ import axios from "axios";
 
 const host = "https://api-entrytest.sandboxindonesia.id/api";
 
-const config = (token) => ({
+const config = (access) => ({
   headers: {
     "Content-Type": "application/json",
-    Authorization: `Bearer ${token}`,
+    Authorization: `Bearer ${access}`,
     Accept: "application/json",
   },
 });
@@ -17,6 +17,7 @@ const configUserUpdate = (access) => ({
   },
 });
 
+// User
 export const postSignIn = (formData) =>
   axios.post(`${host}/auth/login/`, formData, config());
 export const getUserData = (access) =>
@@ -28,4 +29,10 @@ export const patchUserData = (formData, access) =>
 export const postSignOut = (refresh) =>
   axios.post(`${host}/auth/logout/`, refresh);
 
-export const getAPIinfo = () => axios.get(`${host}`, config());
+// Tourist Object
+export const postTouristObject = (formData, access) =>
+  axios.post(
+    `${host}/tourist-object/tourist-object/`,
+    formData,
+    config(access)
+  );
