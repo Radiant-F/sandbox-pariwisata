@@ -12,7 +12,7 @@ import {
   SetAuthModal,
   SetUserData,
   SetUserToken,
-} from "./authSlice";
+} from "../../../redux/slices/authSlice";
 
 export const fetchSignIn = createAsyncThunk(
   "fetchSignIn",
@@ -48,11 +48,11 @@ export const fetchUserData = createAsyncThunk(
 
 export const fetchUserUpdate = createAsyncThunk(
   "fetchUserUpdate",
-  async (formData, { getState }) => {
-    const { access } = getState().auth.token;
+  async (formData, { getState, dispatch }) => {
+    const { refresh, access } = getState().auth.token;
     try {
       const { data } = await patchUserData(formData, access);
-      console.log("berhasil update user:", data);
+      dispatch(fetchUserData({ refresh, access }));
       return data;
     } catch (error) {
       console.log("gagal update user:", error.message);
