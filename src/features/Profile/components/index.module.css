@@ -41,9 +41,12 @@
 }
 
 .inputContainer {
-  padding: 15px;
   border-radius: 10px;
   border: 1px solid grey;
-  margin-top: 10px;
-  flex: 1;
+  width: 97.5%;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 15px;
+  /* margin-top: -10px; */
+  font-family: "Poppins Regular";
 }

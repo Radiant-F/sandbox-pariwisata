@@ -32,6 +32,11 @@ code {
   src: url("./assets/fonts/Poppins-ExtraBold.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: "Poppins Semi Bold";
+  src: url("./assets/fonts/Poppins-SemiBold.ttf") format("truetype");
+}
+
 p {
   font-family: "Poppins Regular";
 }

@@ -28,7 +28,7 @@ export default function TouristForm() {
   }, [status, dispatch]);
 
   const [name, setName] = useState("Kawah Putih");
-  const [image, setImage] = useState(null);
+  // const [image, setImage] = useState(null);
   const [price, setPrice] = useState("50000");
   const category = [
     { slug: "238r9873tgbeirh3489", title: "Pegunungan" },
@@ -44,15 +44,16 @@ export default function TouristForm() {
     type: "Point",
     coordinates: [-6.175395, 106.827201],
   });
-  // const [address, setAddress] = useState("");
+  const [address, setAddress] = useState("");
 
   function submitTouristObj() {
     const formData = {
       name,
-      image,
+      // image,
       price,
       category,
       description,
+      address,
       location,
     };
     dispatch(fetchAddUserTourist(formData));
@@ -66,39 +67,43 @@ export default function TouristForm() {
   }
 
   const disableButton =
-    name === "" ||
-    image === null ||
-    price === "" ||
-    category === "" ||
-    description === "";
+    name === "" || price === "" || category === "" || description === "";
+  // image === null ||
 
   return (
     <main style={{ flex: 1 }}>
       <div className={styles.textTitle}>Tambah Wisata</div>
-      <div>Nama</div>
+      <p style={{ fontFamily: "Poppins Semi Bold" }}>Nama</p>
       <input
+        className={styles.formInput}
         type={"text"}
         name="name"
         onChange={(e) => setName(e.target.value)}
+        placeholder={"Masukan nama wisata"}
       />
-      <div>Harga</div>
+      <p style={{ fontFamily: "Poppins Semi Bold" }}>Harga</p>
       <input
+        className={styles.formInput}
         type={"number"}
         name="harga"
         onChange={(e) => setPrice(e.target.value)}
+        placeholder={"Rp"}
       />
-      <div>Kategori</div>
-      <select
-        value={selectedCategory}
-        onChange={(event) => setSelectedCategory(event.target.value)}
-      >
-        {category.map((v) => (
-          <option value={v.slug} key={v.slug}>
-            {v.title}
-          </option>
-        ))}
-      </select>
-      <div>Deskripsi</div>
+      <p style={{ fontFamily: "Poppins Semi Bold" }}>Kategori</p>
+      <div className={styles.formInputPicker}>
+        <select
+          className={styles.formPicker}
+          value={selectedCategory}
+          onChange={(event) => setSelectedCategory(event.target.value)}
+        >
+          {category.map((v) => (
+            <option value={v.slug} key={v.slug}>
+              {v.title}
+            </option>
+          ))}
+        </select>
+      </div>
+      <p style={{ fontFamily: "Poppins Semi Bold" }}>Deskripsi</p>
       <CKEditor
         editor={ClassicEditor}
         data="<p style={{color:'black'}}>Masukan deskripsi  disini...</p>"
@@ -118,51 +123,69 @@ export default function TouristForm() {
           //   console.log("Focus.", editor);
         }}
       />
-      {/* <div>Alamat</div>
-      <input
-        type={"text"}
+      <p style={{ fontFamily: "Poppins Semi Bold" }}>Alamat</p>
+      {/* <input
+        className={styles.formInput}
+        type={""}
         name="address"
         onChange={(e) => setAddress(e.target.value)}
       /> */}
-      <input
+      <textarea
+        className={styles.formInput}
+        onChange={(e) => setAddress(e.target.value)}
+        placeholder={"Jalan sekian nomor sekian.."}
+        id="message"
+        name="message"
+        rows="4"
+        cols="50"
+        draggable={"false"}
+      />
+      {/* <input
         type="file"
         name="image"
         onChange={(e) => setImage(e.target.files[0])}
         alt="img"
-      />
-      <MapContainer
-        children={
-          <GeoJSON
-            attribution="&copy; credits due..."
-            data={borderline?.coordinates}
+      /> */}
+      <Gap height={30} />
+      <div className={styles.mapContainer}>
+        <MapContainer
+          children={
+            <GeoJSON
+              attribution="&copy; credits due..."
+              data={borderline?.coordinates}
+            />
+          }
+          style={{
+            width: "100%",
+            height: "300px",
+            maxWidth: "700px",
+          }}
+          center={location.coordinates}
+          zoom={13}
+          scrollWheelZoom={true}
+        >
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-        }
-        style={{ width: "100%", height: "300px", maxWidth: "700px" }}
-        center={location.coordinates}
-        zoom={13}
-        scrollWheelZoom={true}
-      >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          <OnClickEvent />
+          <Marker position={location.coordinates}>
+            <Popup>
+              A pretty CSS3 popup. <br /> Easily customizable.
+            </Popup>
+          </Marker>
+        </MapContainer>
+      </div>
+      <Gap height={50} />
+      <div className={styles.btnAction}>
+        <Button cancel={true} title={"Batal"} />
+        <Gap width={20} />
+        <Button
+          title={"Simpan"}
+          disabled={disableButton}
+          onClick={submitTouristObj}
         />
-        <OnClickEvent />
-        <Marker position={location.coordinates}>
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
-        </Marker>
-      </MapContainer>
-      <Gap height={20} />
-      <Button cancel={true} title={"Batal"} />
-      <Button
-        title={"Simpan"}
-        disabled={disableButton}
-        onClick={submitTouristObj}
-      />
-      {/* <button disabled={disableButton} onClick={submitTouristObj}>
-        Simpan
-    </button> */}
+      </div>
       <Gap height={100} />
     </main>
   );

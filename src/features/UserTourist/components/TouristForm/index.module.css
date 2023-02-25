@@ -1,0 +1,45 @@
+.textTitle {
+  color: #1f2f59;
+  font-family: "Poppins Semi Bold";
+  font-size: 40px;
+}
+
+.formInput {
+  border-radius: 10px;
+  border: 1px solid grey;
+  width: 100%;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 15px;
+  margin-top: -10px;
+  font-family: "Poppins Regular";
+}
+
+.formInputPicker {
+  border-radius: 10px;
+  border: 1px solid grey;
+  width: 100%;
+  margin-top: -10px;
+  overflow: hidden;
+  padding-right: 20px;
+}
+
+.formPicker {
+  width: 100%;
+  border: none;
+  padding: 12.5px;
+  font-family: "Poppins Regular";
+  border-radius: 10px;
+}
+
+.mapContainer {
+  overflow: hidden;
+  border-radius: 20px;
+  background-color: aqua;
+  max-width: 700px;
+}
+
+.btnAction {
+  display: flex;
+  justify-content: flex-end;
+}

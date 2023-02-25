@@ -69,11 +69,10 @@ export default function UserProfile() {
           </div>
           <Gap width={30} />
           <div style={{ flex: 1 }}>
-            <div className={styles.textUserName}>
+            <p className={styles.textUserName}>
               {full_name.charAt(0).toUpperCase() + full_name.slice(1)}
-            </div>
-            <Gap height={10} />
-            <div style={{ color: "black" }}>{address}</div>
+            </p>
+            <p style={{ color: "black", marginTop: "-15px" }}>{address}</p>
           </div>
           <Button
             title={status === "pending" ? "Menyimpan.." : "Simpan"}
@@ -85,7 +84,7 @@ export default function UserProfile() {
         <Gap height={40} />
         {/* Name */}
         <div style={{ flex: 1 }}>
-          <div style={{ fontWeight: "bold" }}>Nama</div>
+          <p style={{ fontFamily: "Poppins Bold" }}>Nama</p>
           <input
             className={styles.inputContainer}
             title="name"
@@ -97,7 +96,7 @@ export default function UserProfile() {
         <br />
         {/* Email */}
         <div style={{ flex: 1 }}>
-          <div style={{ fontWeight: "bold" }}>Email</div>
+          <p style={{ fontFamily: "Poppins Bold" }}>Email</p>
           <input
             className={styles.inputContainer}
             title="email"
@@ -109,7 +108,7 @@ export default function UserProfile() {
         <br />
         {/* Address */}
         <div style={{ flex: 1 }}>
-          <div style={{ fontWeight: "bold" }}>Alamat</div>
+          <p style={{ fontFamily: "Poppins Bold" }}>Alamat</p>
           <input
             className={styles.inputContainer}
             title="address"
@@ -121,7 +120,7 @@ export default function UserProfile() {
         <br />
         {/* Phone Number */}
         <div style={{ flex: 1 }}>
-          <div style={{ fontWeight: "bold" }}>No Handphone</div>
+          <p style={{ fontFamily: "Poppins Bold" }}>No Handphone</p>
           <input
             className={styles.inputContainer}
             title="handphone"
@@ -131,6 +130,7 @@ export default function UserProfile() {
           />
         </div>
       </div>
+      <Gap height={100} />
     </main>
   );
 }
