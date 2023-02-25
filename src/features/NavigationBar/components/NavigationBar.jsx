@@ -25,10 +25,6 @@ export default function NavigationBar() {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [menu, setMenu] = useState(false);
-  function handleSignOut() {
-    setMenu(false);
-    dispatch(fetchSignOut(navigate));
-  }
 
   const disableLogin =
     status === "pending" ||
@@ -38,61 +34,76 @@ export default function NavigationBar() {
     password === "";
 
   return (
-    <nav className={styles.container}>
-      <Link to={"/"} onClick={() => setMenu(false)}>
-        <img alt="Sandbox Logo" src={IMGsandbox} style={{ width: 130 }} />
-      </Link>
-      <Link
-        style={{ textDecoration: "none" }}
-        onClick={() => {
-          !token.access ? dispatch(SetAuthModal(!auth_modal)) : setMenu(!menu);
-        }}
-      >
-        {username ? (
-          <div className={styles.profileContainer}>
-            <div className={styles.pfpContainer}>
+    <>
+      {auth_modal && (
+        <div
+          className={styles.overlay}
+          onClick={() => dispatch(SetAuthModal(false))}
+        />
+      )}
+      <nav className={styles.container}>
+        <Link to={"/"} onClick={() => setMenu(false)}>
+          <img alt="Sandbox Logo" src={IMGsandbox} style={{ width: 130 }} />
+        </Link>
+        <Link
+          style={{ textDecoration: "none" }}
+          onClick={() => {
+            !token.access
+              ? dispatch(SetAuthModal(!auth_modal))
+              : setMenu(!menu);
+          }}
+        >
+          {username ? (
+            <div className={styles.profileContainer}>
+              <div className={styles.pfpContainer}>
+                <img
+                  alt="Profile"
+                  src={photo ? photo : IMGpfpDefault}
+                  style={{ height: "50px" }}
+                />
+              </div>
+              <p className={styles.textUsername}>
+                {username.charAt(0).toUpperCase() + username.slice(1)}
+              </p>
               <img
-                alt="Profile"
-                src={photo ? photo : IMGpfpDefault}
-                style={{ height: "50px" }}
+                alt="Chevron menu"
+                src={IconChevron}
+                style={{ width: "10px" }}
               />
             </div>
-            <p className={styles.textUsername}>
-              {username.charAt(0).toUpperCase() + username.slice(1)}
-            </p>
-            <img
-              alt="Chevron menu"
-              src={IconChevron}
-              style={{ width: "10px" }}
-            />
+          ) : (
+            <Button />
+          )}
+        </Link>
+        {menu && (
+          <div className={styles.containerMenu}>
+            <Link
+              to={"/profile"}
+              onClick={() => setMenu(false)}
+              className={styles.btnTextProfile}
+            >
+              Profil Saya
+            </Link>
+            <Link
+              to={"profile/recovery"}
+              onClick={() => setMenu(false)}
+              className={styles.btnTextProfile}
+            >
+              Ubah Password
+            </Link>
+            <Link
+              onClick={() => {
+                setMenu(false);
+                dispatch(fetchSignOut(navigate));
+              }}
+              className={styles.btnTextProfile}
+            >
+              {status === "pending" ? "Memuat.." : "Keluar"}
+            </Link>
           </div>
-        ) : (
-          <Button />
         )}
-      </Link>
-      {menu && (
-        <div className={styles.containerMenu}>
-          <Link
-            to={"/profile"}
-            onClick={() => setMenu(false)}
-            className={styles.btnTextProfile}
-          >
-            Profil Saya
-          </Link>
-          <Link
-            to={"profile/recovery"}
-            onClick={() => setMenu(false)}
-            className={styles.btnTextProfile}
-          >
-            Ubah Password
-          </Link>
-          <Link onClick={handleSignOut} className={styles.btnTextProfile}>
-            Keluar
-          </Link>
-        </div>
-      )}
-      {auth_modal && (
-        <>
+
+        {auth_modal && (
           <div className={styles.modalContainer}>
             <div
               className={styles.modalOverlay}
@@ -138,8 +149,8 @@ export default function NavigationBar() {
               </div>
             </div>
           </div>
-        </>
-      )}
-    </nav>
+        )}
+      </nav>
+    </>
   );
 }

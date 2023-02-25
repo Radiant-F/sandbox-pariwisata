@@ -13,12 +13,22 @@ export default function FormInput({
 }) {
   const { message } = useSelector((state) => state.auth);
   const [onFocus, setOnFocus] = useState(false);
+
+  const res401 =
+    "Tidak ada akun aktif yang ditemukan dengan kredensial yang diberikan";
+
   return (
     <div>
-      <p style={{ color: "black" }}>{title}</p>
+      <p style={{ color: "black", fontFamily: "Poppins Medium" }}>{title}</p>
       <div
         className={styles.inputContainer}
-        style={{ borderColor: onFocus ? "orange" : "#8080808c" }}
+        style={{
+          borderColor: onFocus
+            ? "orange"
+            : res401 === message
+            ? "tomato"
+            : "#8080808c",
+        }}
       >
         <img alt="icon" src={icon} style={{ width: "25px", height: "25px" }} />
         <input

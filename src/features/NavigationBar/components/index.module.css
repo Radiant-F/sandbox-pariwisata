@@ -6,6 +6,14 @@
   height: 50px;
 }
 
+.overlay {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background-color: black;
+  opacity: 0.2;
+}
+
 .modalContainer {
   position: fixed;
   top: 50%;
@@ -73,7 +81,7 @@
 
 .textError {
   color: tomato;
-  font-size: small;
+  font-size: 11.5px;
 }
 
 .profileContainer {
