@@ -15,6 +15,7 @@ import {
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import { Button, Gap } from "../../../../assets";
+import { GeoJSON } from "react-leaflet";
 
 export default function TouristForm() {
   const dispatch = useDispatch();
@@ -29,15 +30,21 @@ export default function TouristForm() {
   const [name, setName] = useState("Kawah Putih");
   const [image, setImage] = useState(null);
   const [price, setPrice] = useState("50000");
-  const [category, setCategory] = useState("Pegunungan");
+  const category = [
+    { slug: "238r9873tgbeirh3489", title: "Pegunungan" },
+    { slug: "ry2897cncrn2h9hf9w9", title: "Pertanian" },
+    { slug: "fmlskdnf09u4r8934r9", title: "Cagar Alam" },
+    { slug: "8239cn87fgeniunhoem", title: "Bahara" },
+  ];
+  const [selectedCategory, setSelectedCategory] = useState(category[0].slug);
   const [description, setDescription] = useState(
     "Deskripsi Wisata Kawah Putih"
   );
   const [location, setLocation] = useState({
     type: "Point",
-    coordinates: [12.9721, 77.5933],
+    coordinates: [-6.175395, 106.827201],
   });
-  const [address, setAddress] = useState("");
+  // const [address, setAddress] = useState("");
 
   function submitTouristObj() {
     const formData = {
@@ -81,15 +88,20 @@ export default function TouristForm() {
         onChange={(e) => setPrice(e.target.value)}
       />
       <div>Kategori</div>
-      <input
-        type={"text"}
-        name="category"
-        onChange={(e) => setCategory(e.target.value)}
-      />
+      <select
+        value={selectedCategory}
+        onChange={(event) => setSelectedCategory(event.target.value)}
+      >
+        {category.map((v) => (
+          <option value={v.slug} key={v.slug}>
+            {v.title}
+          </option>
+        ))}
+      </select>
       <div>Deskripsi</div>
       <CKEditor
         editor={ClassicEditor}
-        data="<p style={{color:'black'}}>Hello from CKEditor</p>"
+        data="<p style={{color:'black'}}>Masukan deskripsi  disini...</p>"
         onReady={(editor) => {
           // You can store the "editor" and use when it is needed.
           //   console.log("Editor is ready to use!", editor);
@@ -106,12 +118,12 @@ export default function TouristForm() {
           //   console.log("Focus.", editor);
         }}
       />
-      <div>Alamat</div>
+      {/* <div>Alamat</div>
       <input
         type={"text"}
         name="address"
         onChange={(e) => setAddress(e.target.value)}
-      />
+      /> */}
       <input
         type="file"
         name="image"
@@ -119,10 +131,16 @@ export default function TouristForm() {
         alt="img"
       />
       <MapContainer
+        children={
+          <GeoJSON
+            attribution="&copy; credits due..."
+            data={borderline?.coordinates}
+          />
+        }
         style={{ width: "100%", height: "300px", maxWidth: "700px" }}
         center={location.coordinates}
         zoom={13}
-        scrollWheelZoom={false}
+        scrollWheelZoom={true}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

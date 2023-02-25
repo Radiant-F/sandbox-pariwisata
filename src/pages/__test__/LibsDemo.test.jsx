@@ -1,43 +1,46 @@
-// import React, { useState } from "react";
-// import {
-//   MapContainer,
-//   Marker,
-//   Popup,
-//   TileLayer,
-//   useMapEvent,
-// } from "react-leaflet";
+import React, { useState } from "react";
+import {
+  MapContainer,
+  Marker,
+  Popup,
+  TileLayer,
+  useMapEvent,
+  GeoJSON,
+} from "react-leaflet";
+import data from "./data.geojson";
 
-// export default function LibsDemo() {
-//   const [position, setPosition] = useState([50.5, 30.5]);
+export default function LibsDemo() {
+  const [position, setPosition] = useState([-6.17562, 106.82715]);
 
-//   function MyComponent() {
-//     const map = useMapEvent("click", ({ latlng }) => {
-//       console.log(latlng);
-//       setPosition([latlng.lat, latlng.lng]);
-//     });
-//     return null;
-//   }
+  function OnClickEvent() {
+    useMapEvent("click", ({ latlng }) => {
+      console.log(latlng);
+      setPosition([latlng.lat, latlng.lng]);
+    });
+    return null;
+  }
 
-//   return (
-//     <MapContainer
-//       style={{ width: "100%", height: "100vh" }}
-//       center={position}
-//       zoom={13}
-//       scrollWheelZoom={false}
-//     >
-//       <TileLayer
-//         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-//         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-//       />
-//       <MyComponent />
-//       <Marker position={position}>
-//         <Popup>
-//           A pretty CSS3 popup. <br /> Easily customizable.
-//         </Popup>
-//       </Marker>
-//     </MapContainer>
-//   );
-// }
+  return (
+    <MapContainer
+      style={{ width: "100%", height: "100vh" }}
+      center={position}
+      zoom={13}
+      scrollWheelZoom={true}
+    >
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      <OnClickEvent />
+      <GeoJSON data={data} style={{ fillColor: "#088", fillOpacity: 0.8 }} />
+      <Marker position={position}>
+        <Popup>
+          A pretty CSS3 popup. <br /> Easily customizable.
+        </Popup>
+      </Marker>
+    </MapContainer>
+  );
+}
 
 // import React, { useState } from "react";
 // import axios from "axios";
@@ -100,31 +103,51 @@
 //   );
 // }
 
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import React from "react";
+// import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+// import { CKEditor } from "@ckeditor/ckeditor5-react";
+// import React from "react";
 
-export default function LibsDemo() {
-  return (
-    <div>
-      <CKEditor
-        editor={ClassicEditor}
-        data="<p>Hello from CKEditor</p>"
-        onReady={(editor) => {
-          // You can store the "editor" and use when it is needed.
-          console.log("Editor is ready to use!", editor);
-        }}
-        onChange={(event, editor) => {
-          const data = editor.getData();
-          console.log({ event, editor, data });
-        }}
-        onBlur={(event, editor) => {
-          console.log("Blur.", editor);
-        }}
-        onFocus={(event, editor) => {
-          console.log("Focus.", editor);
-        }}
-      />
-    </div>
-  );
-}
+// export default function LibsDemo() {
+//   return (
+//     <div>
+//       <CKEditor
+//         editor={ClassicEditor}
+//         data="<p>Hello from CKEditor</p>"
+//         onReady={(editor) => {
+//           // You can store the "editor" and use when it is needed.
+//           console.log("Editor is ready to use!", editor);
+//         }}
+//         onChange={(event, editor) => {
+//           const data = editor.getData();
+//           console.log({ event, editor, data });
+//         }}
+//         onBlur={(event, editor) => {
+//           console.log("Blur.", editor);
+//         }}
+//         onFocus={(event, editor) => {
+//           console.log("Focus.", editor);
+//         }}
+//       />
+//     </div>
+//   );
+// }
+
+// import React, { Component } from "react";
+// import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
+// import mydata from "./data.geojson";
+
+// class LibsDemo extends Component {
+//   render() {
+//     return (
+//       <MapContainer center={[40, -74.5]} zoom={9}>
+//         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+//         <GeoJSON
+//           data={mydata}
+//           style={{ fillColor: "#088", fillOpacity: 0.8 }}
+//         />
+//       </MapContainer>
+//     );
+//   }
+// }
+
+// export default LibsDemo;
