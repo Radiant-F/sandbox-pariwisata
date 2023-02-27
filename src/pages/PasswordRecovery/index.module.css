@@ -5,17 +5,18 @@
 }
 
 .textTitle {
-  font-size: xx-large;
-  font-weight: bold;
   color: #1f2f59;
+  font-family: "Poppins Semi Bold";
+  font-size: 40px;
 }
 
 .inputContainer {
   padding: 15px;
   border-radius: 10px;
   border: 1px solid grey;
-  margin-top: 10px;
   flex: 1;
+  width: 100%;
+  font-family: "Poppins Regular";
 }
 
 .btnContainer {
