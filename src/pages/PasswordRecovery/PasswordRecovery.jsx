@@ -45,9 +45,8 @@ export default function PasswordRecovery() {
 
   return (
     <main className={styles.container}>
-      <div className={styles.textTitle}>Ubah Password</div>
-      <Gap height={50} />
-      <div style={{ fontWeight: "bold" }}>Password Lama</div>
+      <p className={styles.textTitle}>Ubah Password</p>
+      <p style={{ fontWeight: "bold" }}>Password Lama</p>
       <input
         className={styles.inputContainer}
         placeholder={"Masukan password lama"}
@@ -56,8 +55,7 @@ export default function PasswordRecovery() {
         onChange={(event) => setPrevPassword(event.target.value)}
       />
       <br />
-      <Gap height={20} />
-      <div style={{ fontWeight: "bold" }}>Password Baru</div>
+      <p style={{ fontWeight: "bold" }}>Password Baru</p>
       <input
         className={styles.inputContainer}
         placeholder={"Masukan password baru"}
@@ -66,8 +64,7 @@ export default function PasswordRecovery() {
         onChange={(event) => setNewPassword(event.target.value)}
       />
       <br />
-      <Gap height={20} />
-      <div style={{ fontWeight: "bold" }}>Konfirmasi Password Baru</div>
+      <p style={{ fontWeight: "bold" }}>Konfirmasi Password Baru</p>
       <input
         className={styles.inputContainer}
         placeholder={"Masukan konfirmasi password baru"}
@@ -76,7 +73,6 @@ export default function PasswordRecovery() {
         onChange={(event) => setConfirmNewPass(event.target.value)}
       />
       <br />
-      {/* {newPassword !== confirmNewPass && <div>Password tidak cocok</div>} */}
       <Gap height={50} />
       <div
         style={{
