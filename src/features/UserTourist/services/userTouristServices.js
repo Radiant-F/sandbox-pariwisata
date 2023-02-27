@@ -1,12 +1,18 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { SetBorderline } from "../../../redux/slices/touristObjSlice";
-import { getBorderline, postTouristObject } from "../../../services/services";
+import {
+  SetBorderline,
+  SetTouristCategory,
+} from "../../../redux/slices/touristObjSlice";
+import {
+  getBorderline,
+  getTouristCategory,
+  postTouristObject,
+} from "../../../services/services";
 
 export const fetchAddUserTourist = createAsyncThunk(
   "userTourist",
   async (formData, { getState, dispatch }) => {
     const { access } = getState().auth.token;
-    console.log("body data wisata: ", formData);
     try {
       const { data } = await postTouristObject(formData, access);
       console.log("Berhasil menambah obj wisata:", data);
@@ -27,7 +33,21 @@ export const fetchMapBorder = createAsyncThunk(
       dispatch(SetBorderline(data.data));
       return data;
     } catch (error) {
-      console.log("gagal data borderline:", error.response);
+      console.log("Get data borderline error masbro", error.response);
+      return error.message;
+    }
+  }
+);
+
+export const fetchTouristCategory = createAsyncThunk(
+  "fetchTouristCategory",
+  async (args, { dispatch, getState }) => {
+    try {
+      const { data } = await getTouristCategory();
+      dispatch(SetTouristCategory(data.data));
+      return data;
+    } catch (error) {
+      console.log("Get kategori error masbro", error.response);
       return error.message;
     }
   }
