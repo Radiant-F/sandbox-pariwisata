@@ -47,6 +47,7 @@ export const fetchUserData = createAsyncThunk(
   }
 );
 
+// This function will be triggered if token is invalid
 export const fetchRefreshToken = createAsyncThunk(
   "fetchRefreshToken",
   async ({ next, formData }, { dispatch, getState }) => {

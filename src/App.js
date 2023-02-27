@@ -9,8 +9,6 @@ import {
   TouristCreate,
   UserTourist,
 } from "./pages";
-// import { NavigationBar } from "./features/NavigationBar";
-// import { Footer } from "./features/Footer";
 import { Routes, Route } from "react-router-dom";
 import Layout from "./routes/Layout";
 import RequireAuth from "./routes/RequireAuth";
@@ -32,7 +30,7 @@ export default function App() {
           <Route path="profile/tourist/add" element={<TouristCreate />} />
         </Route>
 
-        {/* catch all */}
+        {/* Catch all */}
         <Route path="*" element={<Missing />} />
       </Route>
     </Routes>
