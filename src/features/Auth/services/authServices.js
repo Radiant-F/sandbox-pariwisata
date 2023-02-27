@@ -3,6 +3,7 @@ import {
   getUserData,
   patchUserData,
   postRecoveryPassword,
+  postRefreshToken,
   postSignIn,
   postSignOut,
 } from "../../../services/services";
@@ -46,6 +47,32 @@ export const fetchUserData = createAsyncThunk(
   }
 );
 
+export const fetchRefreshToken = createAsyncThunk(
+  "fetchRefreshToken",
+  async ({ next, formData }, { dispatch, getState }) => {
+    const { refresh } = getState().auth.token;
+    try {
+      const { data } = await postRefreshToken({ refresh });
+      dispatch(SetUserToken({ access: data.access, refresh }));
+      console.log("refresh berhasil masbro", data);
+      switch (next) {
+        case "reset-password":
+          dispatch(fetchRecoverPassword());
+          break;
+        case "user-update":
+          dispatch(fetchUserUpdate(formData));
+          break;
+        default:
+          dispatch(fetchUserData({ refresh, access: data.access }));
+      }
+      return data;
+    } catch (error) {
+      console.log("refresh gagal masbro", error.response);
+      return error.message;
+    }
+  }
+);
+
 export const fetchUserUpdate = createAsyncThunk(
   "fetchUserUpdate",
   async (formData, { getState, dispatch }) => {
@@ -56,6 +83,8 @@ export const fetchUserUpdate = createAsyncThunk(
       return data;
     } catch (error) {
       console.log("gagal update user:", error.message);
+      if (error.response.data.code === "token_not_valid")
+        dispatch(fetchRefreshToken({ next: "user-update", formData }));
       return error.message;
     }
   }
@@ -69,7 +98,8 @@ export const fetchRecoverPassword = createAsyncThunk(
       const { data } = await postRecoveryPassword(formData, access);
       return data;
     } catch (error) {
-      console.log("error reset password masbro", error.message);
+      if (error.response.data.code === "token_not_valid")
+        dispatch(fetchRefreshToken({ next: "reset-password" }));
       return error.message;
     }
   }
