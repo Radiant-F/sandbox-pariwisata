@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchAddUserTourist,
   fetchMapBorder,
+  fetchTouristCategory,
 } from "../../services/userTouristServices";
 import styles from "./index.module.css";
 import {
@@ -16,46 +17,45 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import { Button, Gap } from "../../../../assets";
 import { GeoJSON } from "react-leaflet";
+import { useNavigate } from "react-router-dom";
 
 export default function TouristForm() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { status_borderline: status, borderline } = useSelector(
-    (state) => state.tourist_obj
-  );
+  const { status_borderline, status_category, tourist_category, borderline } =
+    useSelector((state) => state.tourist_obj);
 
   useEffect(() => {
-    if (status === "idle") dispatch(fetchMapBorder());
-  }, [status, dispatch]);
+    if (status_borderline === "idle") dispatch(fetchMapBorder());
+  }, [status_borderline, dispatch]);
+  useEffect(() => {
+    if (status_category === "idle") dispatch(fetchTouristCategory());
+  }, [status_category, dispatch]);
 
-  const [name, setName] = useState("Kawah Putih");
+  const [name, setName] = useState("");
   // const [image, setImage] = useState(null);
-  const [price, setPrice] = useState("50000");
-  const category = [
-    { slug: "238r9873tgbeirh3489", title: "Pegunungan" },
-    { slug: "ry2897cncrn2h9hf9w9", title: "Pertanian" },
-    { slug: "fmlskdnf09u4r8934r9", title: "Cagar Alam" },
-    { slug: "8239cn87fgeniunhoem", title: "Bahara" },
-  ];
-  const [selectedCategory, setSelectedCategory] = useState(category[0].slug);
-  const [description, setDescription] = useState(
-    "Deskripsi Wisata Kawah Putih"
+  const [price, setPrice] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(
+    tourist_category[0].slug
   );
+  const [description, setDescription] = useState("");
+  const [address, setAddress] = useState("");
   const [location, setLocation] = useState({
     type: "Point",
     coordinates: [-6.175395, 106.827201],
   });
-  const [address, setAddress] = useState("");
 
   function submitTouristObj() {
     const formData = {
       name,
-      // image,
+      image: null,
       price,
-      category,
+      category: selectedCategory,
       description,
       address,
       location,
     };
+    // console.log(formData);
     dispatch(fetchAddUserTourist(formData));
   }
 
@@ -67,7 +67,10 @@ export default function TouristForm() {
   }
 
   const disableButton =
-    name === "" || price === "" || category === "" || description === "";
+    name === "" ||
+    price === "" ||
+    selectedCategory === "memuat" ||
+    description === "";
   // image === null ||
 
   return (
@@ -80,6 +83,7 @@ export default function TouristForm() {
         name="name"
         onChange={(e) => setName(e.target.value)}
         placeholder={"Masukan nama wisata"}
+        value={name}
       />
       <p style={{ fontFamily: "Poppins Semi Bold" }}>Harga</p>
       <input
@@ -88,6 +92,7 @@ export default function TouristForm() {
         name="harga"
         onChange={(e) => setPrice(e.target.value)}
         placeholder={"Rp"}
+        value={price}
       />
       <p style={{ fontFamily: "Poppins Semi Bold" }}>Kategori</p>
       <div className={styles.formInputPicker}>
@@ -96,9 +101,9 @@ export default function TouristForm() {
           value={selectedCategory}
           onChange={(event) => setSelectedCategory(event.target.value)}
         >
-          {category.map((v) => (
+          {tourist_category.map((v) => (
             <option value={v.slug} key={v.slug}>
-              {v.title}
+              {v.label}
             </option>
           ))}
         </select>
@@ -106,15 +111,11 @@ export default function TouristForm() {
       <p style={{ fontFamily: "Poppins Semi Bold" }}>Deskripsi</p>
       <CKEditor
         editor={ClassicEditor}
-        data="<p style={{color:'black'}}>Masukan deskripsi  disini...</p>"
-        onReady={(editor) => {
-          // You can store the "editor" and use when it is needed.
-          //   console.log("Editor is ready to use!", editor);
-        }}
+        data="<p>Masukan deskripsi  disini...</p>"
         onChange={(event, editor) => {
           const data = editor.getData();
           setDescription(data);
-          console.log({ event, editor, data });
+          // console.log({ event, editor, data });
         }}
         onBlur={(event, editor) => {
           //   console.log("Blur.", editor);
@@ -124,15 +125,10 @@ export default function TouristForm() {
         }}
       />
       <p style={{ fontFamily: "Poppins Semi Bold" }}>Alamat</p>
-      {/* <input
-        className={styles.formInput}
-        type={""}
-        name="address"
-        onChange={(e) => setAddress(e.target.value)}
-      /> */}
       <textarea
         className={styles.formInput}
         onChange={(e) => setAddress(e.target.value)}
+        value={address}
         placeholder={"Jalan sekian nomor sekian.."}
         id="message"
         name="message"
@@ -178,7 +174,11 @@ export default function TouristForm() {
       </div>
       <Gap height={50} />
       <div className={styles.btnAction}>
-        <Button cancel={true} title={"Batal"} />
+        <Button
+          cancel={true}
+          title={"Batal"}
+          onClick={() => navigate("/profile/tourist")}
+        />
         <Gap width={20} />
         <Button
           title={"Simpan"}
