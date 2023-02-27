@@ -16,9 +16,7 @@ import FormInput from "./FormInput";
 
 export default function NavigationBar() {
   const dispatch = useDispatch();
-  const { token, auth_modal, status, user_data } = useSelector(
-    (state) => state.auth
-  );
+  const { auth_modal, status, user_data } = useSelector((state) => state.auth);
   const { username, photo } = user_data;
   const navigate = useNavigate();
 
@@ -32,6 +30,8 @@ export default function NavigationBar() {
     email === "" ||
     password === null ||
     password === "";
+
+  // console.log(!token.access);
 
   return (
     <>
@@ -48,9 +48,8 @@ export default function NavigationBar() {
         <Link
           style={{ textDecoration: "none" }}
           onClick={() => {
-            !token.access
-              ? dispatch(SetAuthModal(!auth_modal))
-              : setMenu(!menu);
+            if (!username) dispatch(SetAuthModal(!auth_modal));
+            else setMenu(!menu);
           }}
         >
           {username ? (
