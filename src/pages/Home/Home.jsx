@@ -22,6 +22,7 @@ export default function Home() {
               <img
                 src={ImgTouristObj}
                 style={{ width: "100%", borderRadius: "10px" }}
+                alt="tourist"
               />
               <Gap height={10} />
               <div className={styles.divDetail}>
