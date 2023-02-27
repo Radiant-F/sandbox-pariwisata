@@ -48,7 +48,13 @@ export default function UserProfile() {
             <div className={styles.containerImgProfile}>
               <img
                 alt="profile"
-                src={image ? image : photo ? photo : IMGpfpDefault}
+                src={
+                  image
+                    ? URL.createObjectURL(image)
+                    : photo
+                    ? photo
+                    : IMGpfpDefault
+                }
                 style={{ height: "110px" }}
               />
             </div>
