@@ -17,7 +17,7 @@ const configMultipart = (access) => ({
   },
 });
 
-// User
+// User services
 export const postSignIn = (formData) =>
   axios.post(`${host}/auth/login/`, formData, config());
 export const getUserData = (access) =>
@@ -28,8 +28,10 @@ export const patchUserData = (formData, access) =>
   axios.patch(`${host}/user/user/me/`, formData, configMultipart(access));
 export const postSignOut = (refresh) =>
   axios.post(`${host}/auth/logout/`, refresh);
+export const postRefreshToken = (refresh) =>
+  axios.post(`${host}/auth/refresh/`, refresh, config());
 
-// Tourist
+// Tourist object services
 export const postTouristObject = (formData, access) =>
   axios.post(
     `${host}/tourist-object/tourist-object/`,
@@ -38,3 +40,5 @@ export const postTouristObject = (formData, access) =>
   );
 export const getBorderline = (access) =>
   axios.get(`${host}/datamaster/borderline/`, config(access));
+export const getTouristCategory = () =>
+  axios.get(`${host}/datamaster/tourist-object-category/`);
