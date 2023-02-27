@@ -18,7 +18,10 @@ const defaultUserData = {
 };
 
 const initialState = {
-  token: { access: null, refresh: null },
+  token: {
+    access: null,
+    refresh: null,
+  },
   user_data: {},
   status: "idle",
   message: null,
