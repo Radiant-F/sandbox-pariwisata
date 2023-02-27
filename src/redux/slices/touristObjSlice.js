@@ -2,13 +2,16 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   fetchAddUserTourist,
   fetchMapBorder,
+  fetchTouristCategory,
 } from "../../features/UserTourist/services/userTouristServices";
 
 const initialState = {
   status: "idle",
   status_borderline: "idle",
+  status_category: "idle",
   data: null,
   tourist_id: null,
+  tourist_category: [{ slug: "memuat", title: "Memuat.." }],
   borderline: {
     type: null,
     coordinates: [[[]]],
@@ -27,6 +30,9 @@ export const touristObjSlice = createSlice({
     },
     SetBorderline(state, action) {
       state.borderline = action.payload;
+    },
+    SetTouristCategory(state, action) {
+      state.tourist_category = action.payload;
     },
   },
   extraReducers(builder) {
@@ -50,10 +56,24 @@ export const touristObjSlice = createSlice({
       .addCase(fetchMapBorder.rejected, (state, action) => {
         state.status_borderline = "failed";
       });
+    builder
+      .addCase(fetchTouristCategory.pending, (state, action) => {
+        state.status_category = "pending";
+      })
+      .addCase(fetchTouristCategory.fulfilled, (state, action) => {
+        state.status_category = "success";
+      })
+      .addCase(fetchTouristCategory.rejected, (state, action) => {
+        state.status_category = "failed";
+      });
   },
 });
 
-export const { SetObjTouristData, SetTouristId, SetBorderline } =
-  touristObjSlice.actions;
+export const {
+  SetObjTouristData,
+  SetTouristId,
+  SetBorderline,
+  SetTouristCategory,
+} = touristObjSlice.actions;
 
 export default touristObjSlice.reducer;
