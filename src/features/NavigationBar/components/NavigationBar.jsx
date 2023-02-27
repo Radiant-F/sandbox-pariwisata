@@ -31,8 +31,6 @@ export default function NavigationBar() {
     password === null ||
     password === "";
 
-  // console.log(!token.access);
-
   return (
     <>
       {auth_modal && (
@@ -48,6 +46,7 @@ export default function NavigationBar() {
         <Link
           style={{ textDecoration: "none" }}
           onClick={() => {
+            // Login modal will be shown if username is not null
             if (!username) dispatch(SetAuthModal(!auth_modal));
             else setMenu(!menu);
           }}
@@ -71,9 +70,10 @@ export default function NavigationBar() {
               />
             </div>
           ) : (
-            <Button />
+            <Button /> // onClick to parent component
           )}
         </Link>
+        {/* User menu will be shown if username is not null */}
         {menu && (
           <div className={styles.containerMenu}>
             <Link
@@ -101,7 +101,7 @@ export default function NavigationBar() {
             </Link>
           </div>
         )}
-
+        {/* Login modal */}
         {auth_modal && (
           <div className={styles.modalContainer}>
             <div
