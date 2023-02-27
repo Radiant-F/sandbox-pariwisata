@@ -10,8 +10,10 @@ import Gap from "./components/Gap";
 import IconChevron from "./icons/chevron.png";
 import IconCamera from "./icons/camera.png";
 import IconAddCircle from "./icons/add-circle.png";
+import ImgTouristObj from "./images/kawah-putih.jpg";
 
 export {
+  ImgTouristObj,
   IMGpfpDefault,
   IMGsandbox,
   Button,
