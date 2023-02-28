@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { SetAuthModal } from "../../../redux/slices/authSlice";
@@ -23,6 +23,12 @@ export default function NavigationBar() {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [menu, setMenu] = useState(false);
+
+  useEffect(() => {
+    const userCredential = localStorage.getItem("user_credential");
+    const formData = JSON.parse(userCredential);
+    if (formData) dispatch(fetchSignIn(formData));
+  }, [dispatch]);
 
   const disableLogin =
     status === "pending" ||
