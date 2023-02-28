@@ -21,6 +21,7 @@ export const fetchSignIn = createAsyncThunk(
     dispatch(SetAuthMessage(null));
     try {
       const { data } = await postSignIn(formData);
+      localStorage.setItem("user_credential", JSON.stringify(formData));
       dispatch(fetchUserData(data));
       return data;
     } catch (error) {
@@ -112,6 +113,7 @@ export const fetchSignOut = createAsyncThunk(
     try {
       const { refresh } = getState().auth.token;
       const { data } = await postSignOut({ refresh });
+      localStorage.removeItem("user_credential");
       dispatch(ResetUserData());
       navigate("/", { replace: true });
       return data;
