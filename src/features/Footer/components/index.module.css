@@ -1,0 +1,15 @@
+.container {
+  background-color: #2b2c2b;
+  justify-content: center;
+  align-items: center;
+  /* position: fixed; */
+  width: 100%;
+  height: 180px;
+  display: flex;
+}
+
+.containerContent {
+  width: 100%;
+  margin-left: 100px;
+  margin-right: 100px;
+}
