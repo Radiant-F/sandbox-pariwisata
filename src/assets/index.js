@@ -11,8 +11,10 @@ import IconChevron from "./icons/chevron.png";
 import IconCamera from "./icons/camera.png";
 import IconAddCircle from "./icons/add-circle.png";
 import ImgTouristObj from "./images/kawah-putih.jpg";
+import Line from "./components/Line";
 
 export {
+  Line,
   ImgTouristObj,
   IMGpfpDefault,
   IMGsandbox,
