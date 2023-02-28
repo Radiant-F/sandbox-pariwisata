@@ -5,6 +5,7 @@ export default function Gap({
   marginRight,
   marginTop,
   marginBottom,
+  flex,
 }) {
   return (
     <div
@@ -15,6 +16,7 @@ export default function Gap({
         marginRight,
         marginTop,
         marginBottom,
+        flex,
       }}
     />
   );
