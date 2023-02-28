@@ -1,46 +1,46 @@
-import React, { useState } from "react";
-import {
-  MapContainer,
-  Marker,
-  Popup,
-  TileLayer,
-  useMapEvent,
-  GeoJSON,
-} from "react-leaflet";
-import data from "./data.geojson";
+// import React, { useState } from "react";
+// import {
+//   MapContainer,
+//   Marker,
+//   Popup,
+//   TileLayer,
+//   useMapEvent,
+//   GeoJSON,
+// } from "react-leaflet";
+// import data from "./data.geojson";
 
-export default function LibsDemo() {
-  const [position, setPosition] = useState([-6.17562, 106.82715]);
+// export default function LibsDemo() {
+//   const [position, setPosition] = useState([-6.17562, 106.82715]);
 
-  function OnClickEvent() {
-    useMapEvent("click", ({ latlng }) => {
-      console.log(latlng);
-      setPosition([latlng.lat, latlng.lng]);
-    });
-    return null;
-  }
+//   function OnClickEvent() {
+//     useMapEvent("click", ({ latlng }) => {
+//       console.log(latlng);
+//       setPosition([latlng.lat, latlng.lng]);
+//     });
+//     return null;
+//   }
 
-  return (
-    <MapContainer
-      style={{ width: "100%", height: "100vh" }}
-      center={position}
-      zoom={13}
-      scrollWheelZoom={true}
-    >
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      <OnClickEvent />
-      <GeoJSON data={data} style={{ fillColor: "#088", fillOpacity: 0.8 }} />
-      <Marker position={position}>
-        <Popup>
-          A pretty CSS3 popup. <br /> Easily customizable.
-        </Popup>
-      </Marker>
-    </MapContainer>
-  );
-}
+//   return (
+//     <MapContainer
+//       style={{ width: "100%", height: "100vh" }}
+//       center={position}
+//       zoom={13}
+//       scrollWheelZoom={true}
+//     >
+//       <TileLayer
+//         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+//         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+//       />
+//       <OnClickEvent />
+//       <GeoJSON data={data} style={{ fillColor: "#088", fillOpacity: 0.8 }} />
+//       <Marker position={position}>
+//         <Popup>
+//           A pretty CSS3 popup. <br /> Easily customizable.
+//         </Popup>
+//       </Marker>
+//     </MapContainer>
+//   );
+// }
 
 // import React, { useState } from "react";
 // import axios from "axios";
@@ -151,3 +151,42 @@ export default function LibsDemo() {
 // }
 
 // export default LibsDemo;
+
+export default function LibsDemo() {
+  const token = "238rcyn92weuihfh29cnrh9wehfch29crn938crhn98chwsf";
+
+  return (
+    <main style={{ height: "100vh" }}>
+      <p>LibsDemo</p>
+      <button
+        onClick={() => {
+          localStorage.setItem("token", JSON.stringify(token));
+        }}
+      >
+        Simpan data
+      </button>
+      <button
+        onClick={() => {
+          const token = localStorage.getItem("token");
+          console.log(JSON.parse(token));
+        }}
+      >
+        Lihat data
+      </button>
+      <button
+        onClick={() => {
+          localStorage.setItem("token", JSON.stringify(token + " update"));
+        }}
+      >
+        Ubah data
+      </button>
+      <button
+        onClick={() => {
+          localStorage.removeItem("token");
+        }}
+      >
+        Hapus data
+      </button>
+    </main>
+  );
+}
