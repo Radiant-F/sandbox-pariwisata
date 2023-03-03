@@ -14,27 +14,27 @@ code {
 
 @font-face {
   font-family: "Poppins Regular";
-  src: url("./assets/fonts/Poppins-Regular.ttf") format("truetype");
+  src: url("./components/assets/fonts/Poppins-Regular.ttf") format("truetype");
 }
 
 @font-face {
   font-family: "Poppins Medium";
-  src: url("./assets/fonts/Poppins-Medium.ttf") format("truetype");
+  src: url("./components/assets/fonts/Poppins-Medium.ttf") format("truetype");
 }
 
 @font-face {
   font-family: "Poppins Bold";
-  src: url("./assets/fonts/Poppins-Bold.ttf") format("truetype");
+  src: url("./components/assets/fonts/Poppins-Bold.ttf") format("truetype");
 }
 
 @font-face {
   font-family: "Poppins Extra Bold";
-  src: url("./assets/fonts/Poppins-ExtraBold.ttf") format("truetype");
+  src: url("./components/assets/fonts/Poppins-ExtraBold.ttf") format("truetype");
 }
 
 @font-face {
   font-family: "Poppins Semi Bold";
-  src: url("./assets/fonts/Poppins-SemiBold.ttf") format("truetype");
+  src: url("./components/assets/fonts/Poppins-SemiBold.ttf") format("truetype");
 }
 
 p {
