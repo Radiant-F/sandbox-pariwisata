@@ -40,6 +40,8 @@ export default function UserProfile() {
     noHandphone === "" ||
     status === "pending";
 
+  // console.log(URL.createObjectURL(image));
+
   return (
     <main style={{ flex: 1 }}>
       <div style={{ flex: 1 }}>
