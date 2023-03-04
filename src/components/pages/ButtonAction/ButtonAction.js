@@ -18,7 +18,12 @@ export default function ButtonAction({
     >
       {icon && (
         <>
-          <img src={IconPlusRound} width={20} height={20} />
+          <img
+            alt="icon button action"
+            src={IconPlusRound}
+            width={20}
+            height={20}
+          />
           <div style={{ width: 7.5 }} />
         </>
       )}
