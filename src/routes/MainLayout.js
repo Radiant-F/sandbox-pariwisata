@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
-import { Footer, Gap, NavBar } from "../components";
+import { Footer, Gap } from "../components";
+import NavBar from "../features/NavBar/components/NavBar";
 
 export default function MainLayout() {
   return (
